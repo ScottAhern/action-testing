@@ -21,6 +21,9 @@ jobs:
         with:
           fetch-depth: 0
           projectBaseDir: 'src'
+          sonar_args: >
+            -Dsonar.organization=ScottAhern
+            -Dsonar.projectKey=scottahern_action-testing
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env: 
