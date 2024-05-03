@@ -21,7 +21,7 @@ jobs:
         with:
           fetch-depth: 0
           projectBaseDir: 'src'
-          args: >
+          args: |
             sonar.organization=scottahern
             sonar.projectKey=scottahern_action-testing
       - name: SonarCloud Scan
