@@ -43,15 +43,15 @@ runs:
   - name: Login to Docker Hub
     uses: docker/login-action@v3
     with:
-      username: ${{ input.dockerhub_username }}
-      password: ${{ input.dockerhub_token }}
+      username: ${{ inputs.dockerhub_username }}
+      password: ${{ inputs.dockerhub_token }}
       
   - name: Build and push
     uses: docker/build-push-action@v5
     with:
-      context: ${{ input.build_context }}
+      context: ${{ inputs.build_context }}
       platforms: linux/amd64,linux/arm64
       push: true
-      tags: ${{ input.dockerhub_repo_owner }}/${{ input.image_name }}:${{ input.image_tag }}
+      tags: ${{ inputs.dockerhub_repo_owner }}/${{ inputs.image_name }}:${{ inputs.image_tag }}
       cache-from: type=gha
       cache-to: type=gha,mode=max
