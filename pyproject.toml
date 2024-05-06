@@ -1,5 +1,5 @@
 [tool.pytest.ini_options]
 pythonpath = "src/python_app"
 
-[mypy]
+[tool.mypy]
 ignore_missing_imports = True
