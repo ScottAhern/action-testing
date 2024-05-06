@@ -3,7 +3,3 @@ pythonpath = "src/python_app"
 
 [tool.mypy]
 ignore_missing_imports = true
-
-[tool.flake8]
-exclude = */__pycache__
-    */.venv
