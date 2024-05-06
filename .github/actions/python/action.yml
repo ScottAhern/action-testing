@@ -35,6 +35,6 @@ runs:
       pytest --cov
 
   - name: Check Python typing with mypy
-  shell: bash
-  run: |
-    mypy src
+    shell: bash
+    run: |
+      mypy src
