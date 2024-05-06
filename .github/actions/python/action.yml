@@ -18,12 +18,15 @@ runs:
     shell: bash
     run: |
       python -m pip install --upgrade pip
-      pip install flake8 pytest pytest-cov mypy
+      python -m venv venv
+      source venv/bin/activate
+      pip install flake8 pytest pytest-cov mypy flake8-bugbear
       if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
   - name: Lint with flake8
     shell: bash
     run: |
+      source venv/bin/activate
       # stop the build if there are Python syntax errors or undefined names
       flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
       # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
@@ -32,9 +35,11 @@ runs:
   - name: Test with pytest
     shell: bash
     run: |
+      source venv/bin/activate
       pytest --cov
 
   - name: Check Python typing with mypy
     shell: bash
     run: |
+      source venv/bin/activate
       mypy src
