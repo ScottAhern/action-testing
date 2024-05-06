@@ -13,7 +13,6 @@ inputs:
   build_context:
     description: 'Directory that will be used for the build context'
     required: true
-    default: "src"
 
   dockerhub_repo_owner:
     description: 'Dockerhub repository owner. Eg. dockerhub_repo_owner/image_name:image_tag'
