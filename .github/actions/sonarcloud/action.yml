@@ -17,9 +17,9 @@ runs:
   steps:
   - name: Checkout
     uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          projectBaseDir: 'src'
+    with:
+      fetch-depth: 0
+      projectBaseDir: 'src'
   - name: SonarCloud Scan
     uses: SonarSource/sonarcloud-github-action@master
     with:
