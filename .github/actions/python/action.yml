@@ -21,6 +21,12 @@ runs:
       .venv/bin/python -m pip install --upgrade pip
       .venv/bin/pip install flake8 pytest pytest-cov mypy flake8-bugbear
 
+  - name: Format code with Black
+    uses: psf/black@stable
+    with:
+      options: "--check --verbose"
+      src: "./src/python_app"
+
   - name: Lint with flake8
     shell: bash
     # with below, flake8 will run on ALL directories within src/python_app

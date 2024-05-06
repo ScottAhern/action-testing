@@ -23,8 +23,8 @@ runs:
       SONAR_TOKEN: ${{ inputs.sonar_token }}
       GITHUB_TOKEN: ${{ inputs.github_token }}
   - name: Clean up .scannerwork folder
-  # Sonarcloud schedules cleanup at END of workflow, if another action does a checkout before this, it will break.
-  # This is a workaround, details here: https://github.com/SonarSource/sonarqube-scan-action/issues/22#issuecomment-1906822668
+    # Sonarcloud schedules cleanup at END of workflow, if another action does a checkout before this, it will break.
+    # This is a workaround, details here: https://github.com/SonarSource/sonarqube-scan-action/issues/22#issuecomment-1906822668
     shell: bash
     run: |
       sudo rm -rf .scannerwork
