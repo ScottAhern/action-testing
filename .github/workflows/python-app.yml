@@ -23,6 +23,15 @@ jobs:
       with:
         fetch-depth: 0
 
+    - name: Validate conventional commits
+      uses: wagoid/commitlint-github-action@v6
+
+    - name: Scan for secrets
+      uses: gitleaks/gitleaks-action@v2
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITLEAKS_LICENSE: ${{ secrets.GITLEAKS_TOKEN }}
+
     - name: Run Custom SonarCloud action
       uses: ./.github/actions/sonarcloud/
       with: 
