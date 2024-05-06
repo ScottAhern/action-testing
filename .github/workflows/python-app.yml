@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Run Custom SonarCloud action
-      uses: ./.github/actions/sonarcloud_action.yml
+      uses: ./.github/actions/sonarcloud/
       with: 
         github_token: ${{ secrets.GITHUB_TOKEN }}
         sonar_token: ${{ secrets.SONAR_TOKEN }}
@@ -23,12 +23,12 @@ jobs:
           -D sonar.projectKey=scottahern_action-testing
 
     - name: Run Custom PyTest action
-      uses: ./.github/actions/pytest_action.yml
+      uses: ./.github/actions/pytest/
       with: 
         python_version: "3.10"
 
     - name: Run Custom PyTest action
-      uses: ./.github/actions/dockerhub_action.yml
+      uses: ./.github/actions/dockerhub/
       with: 
         dockerhub_username: ${{ secrets.DOCKERHUB_USERNAME }}
         dockerhub_token: ${{ secrets.DOCKERHUB_TOKEN }}
