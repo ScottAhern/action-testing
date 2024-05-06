@@ -18,8 +18,8 @@ runs:
     shell: bash
     run: |
       python3 -m venv .venv
-      .venv/Scripts/pip install --upgrade pip
-      .venv/Scripts/pip install flake8 pytest pytest-cov mypy
+      .venv/bin/pip install --upgrade pip
+      .venv/bin/pip install flake8 pytest pytest-cov mypy
 
       # source .venv/bin/activate
       # python3 -m pip install --upgrade pip
