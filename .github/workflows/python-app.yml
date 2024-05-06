@@ -41,8 +41,8 @@ jobs:
           -D sonar.organization=scottahern
           -D sonar.projectKey=scottahern_action-testing
 
-    - name: Run Custom PyTest action
-      uses: ./.github/actions/pytest/
+    - name: Run Custom Python CI action
+      uses: ./.github/actions/python/
       with: 
         python_version: "3.10"
 
