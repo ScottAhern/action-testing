@@ -2,4 +2,4 @@
 pythonpath = "src/python_app"
 
 [tool.mypy]
-ignore_missing_imports = True
+ignore_missing_imports = true
