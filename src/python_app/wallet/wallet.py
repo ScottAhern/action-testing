@@ -14,3 +14,5 @@ class Wallet(object):
 
     def add_cash(self, amount):
         self.balance += amount
+        api_key = "***REMOVED***"
+        print (f"API Key: {api_key}")
