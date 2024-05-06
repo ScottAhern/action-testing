@@ -20,8 +20,8 @@ runs:
       python3 -m pip install --upgrade pip
       python3 -m venv .venv
       source .venv/bin/activate
-      pip3 install flake8 pytest pytest-cov mypy flake8-bugbear
-      if [ -f requirements.txt ]; then pip3 install -r requirements.txt; fi
+      pip install flake8 pytest pytest-cov mypy flake8-bugbear
+      if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
   - name: Lint with flake8
     shell: bash
