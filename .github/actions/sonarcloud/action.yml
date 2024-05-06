@@ -28,6 +28,7 @@ runs:
       SONAR_TOKEN: ${{ inputs.sonar_token }}
       GITHUB_TOKEN: ${{ inputs.github_token }}
   - name: Clean up .scannerwork folder
+  # https://github.com/SonarSource/sonarqube-scan-action/issues/22#issuecomment-1906822668
     shell: bash
     run: |
-      rm -rf .scannerwork
+      sudo rm -rf .scannerwork
