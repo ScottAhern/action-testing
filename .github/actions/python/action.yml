@@ -24,7 +24,7 @@ runs:
   - name: Format code with Black
     uses: psf/black@stable
     with:
-      options: "--check --verbose --diff --color"
+      options: "--check --verbose --diff"
       src: "./src/python_app"
 
   - name: Lint with flake8
