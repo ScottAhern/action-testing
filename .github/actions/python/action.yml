@@ -3,7 +3,7 @@ description: 'Tests a Python application using PyTest and flake8'
 
 inputs:
   python_version:
-    description: 'The Python version that the code will be tested with'
+    description: 'Required Python version'
     required: true
   
 runs:
@@ -24,17 +24,17 @@ runs:
   - name: Format code with Black
     uses: psf/black@stable
     with:
-      options: "--check --verbose"
+      options: "--check --verbose --diff --color"
       src: "./src/python_app"
 
   - name: Lint with flake8
     shell: bash
     # with below, flake8 will run on ALL directories within src/python_app
-    # to exclude directories, edit pyproject.toml
+    # to exclude directories, edit .flake8
     run: |
-      # stop the build if there are Python syntax errors or undefined names
+      # flake8 - stop the build if there are Python syntax errors or undefined names
       .venv/bin/python -m flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-      # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+      # flake8 - exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
       .venv/bin/python -m flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
   - name: Test with pytest
