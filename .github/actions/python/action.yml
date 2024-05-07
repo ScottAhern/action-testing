@@ -21,13 +21,16 @@ runs:
       .venv/bin/python -m pip install --upgrade pip
       .venv/bin/pip install flake8 pytest pytest-cov mypy flake8-bugbear bandit[toml]
 
-  - name: Format code with Black
+    # Good explaination of different Python linting and formatting tools:
+    # https://inventwithpython.com/blog/2022/11/19/python-linter-comparison-2022-pylint-vs-pyflakes-vs-flake8-vs-autopep8-vs-bandit-vs-prospector-vs-pylama-vs-pyroma-vs-black-vs-mypy-vs-radon-vs-mccabe/
+
+  - name: Check Format with Black
     uses: psf/black@stable
     with:
       options: "--check --verbose --diff"
       src: "./src/python_app"
 
-  - name: Lint with flake8
+  - name: Error, Style Lint and Complexity Analysis with flake8
     shell: bash
     # with below, flake8 will run on ALL directories within src/python_app
     # to exclude directories, edit .flake8
@@ -37,17 +40,17 @@ runs:
       # flake8 - exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
       .venv/bin/python -m flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
-  - name: Test with pytest
+  - name: Test with PyTest
     shell: bash
     run: |
       .venv/bin/python -m pytest --cov
 
-  - name: Check Python typing with mypy
+  - name: Type Check with Mypy
     shell: bash
     run: |
       .venv/bin/python -m mypy src
 
-  - name: Security scan with Bandit
+  - name: Security Lint with Bandit
     shell: bash
     run: |
       # bandit - log level low, critical issues only. Reports only if high confidence
