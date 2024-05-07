@@ -10,9 +10,19 @@ runs:
   using: 'composite'
   steps:
   - name: Set up Python
-    uses: actions/setup-python@v3
+    uses: actions/setup-python@v4
     with:
       python-version: ${{ inputs.python_version }}
+
+  - name: Cache venv
+    uses: actions/cache@v3
+    id: cache-venv
+    # Cache naming convention from:
+    # https://adamj.eu/tech/2023/11/02/github-actions-faster-python-virtual-environments/
+    # strict versioning in requirements.txt required 
+    with:
+      key: venv-${{ runner.os }}-${{ steps.setup_python.outputs.python-version}}-${{ hashFiles('src/python_app/requirements.txt') }}
+      path: src/python_app/.venv
 
   - name: Install dependencies
     shell: bash
@@ -20,6 +30,7 @@ runs:
       python3 -m venv .venv
       .venv/bin/python -m pip install --upgrade pip
       .venv/bin/pip install flake8 pytest pytest-cov mypy flake8-bugbear bandit[toml]
+      .venv/bin/pip freeze
 
     # Good explaination of different Python linting and formatting tools:
     # https://inventwithpython.com/blog/2022/11/19/python-linter-comparison-2022-pylint-vs-pyflakes-vs-flake8-vs-autopep8-vs-bandit-vs-prospector-vs-pylama-vs-pyroma-vs-black-vs-mypy-vs-radon-vs-mccabe/
