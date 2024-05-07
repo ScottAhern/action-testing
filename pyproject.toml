@@ -5,4 +5,4 @@ pythonpath = "src/python_app"
 ignore_missing_imports = true
 
 [tool.bandit]
-exclude = ".venv"
+exclude_dirs = ".venv"
