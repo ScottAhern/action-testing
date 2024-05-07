@@ -19,7 +19,7 @@ runs:
     run: |
       python3 -m venv .venv
       .venv/bin/python -m pip install --upgrade pip
-      .venv/bin/pip install flake8 pytest pytest-cov mypy flake8-bugbear
+      .venv/bin/pip install flake8 pytest pytest-cov mypy flake8-bugbear bandit[toml]
 
   - name: Format code with Black
     uses: psf/black@stable
@@ -40,11 +40,15 @@ runs:
   - name: Test with pytest
     shell: bash
     run: |
-      source .venv/bin/activate
-      python3 -m pytest --cov
+      .venv/bin/python -m pytest --cov
 
   - name: Check Python typing with mypy
     shell: bash
     run: |
-      source .venv/bin/activate
-      python3 -m mypy src
+      .venv/bin/python -m mypy src
+
+  - name: Security scan with Bandit
+    shell: bash
+    run: |
+      # bandit - log level low, critical issues only. Reports only if high confidence
+      .venv/bin/python -m bandit -ll -ii -r .
