@@ -51,4 +51,4 @@ runs:
     shell: bash
     run: |
       # bandit - log level low, critical issues only. Reports only if high confidence
-      .venv/bin/python -m bandit -ll -ii -r .
+      .venv/bin/python -m bandit -ll -ii -r . -x ./.venv
