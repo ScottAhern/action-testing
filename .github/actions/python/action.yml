@@ -11,6 +11,7 @@ runs:
   steps:
   - name: Set up Python
     uses: actions/setup-python@v4
+    id: setup_python
     with:
       python-version: ${{ inputs.python_version }}
 
