@@ -23,7 +23,7 @@ runs:
     # strict versioning in requirements.txt required 
     with:
       key: venv-${{ runner.os }}-${{ steps.setup_python.outputs.python-version}}-${{ hashFiles('**/*requirements.txt') }}
-      path: src/python_app/.venv
+      path: ~/src/python_app/.venv
 
   - name: Install dependencies
     if: steps.cache-primes.outputs.cache-hit != 'true'
