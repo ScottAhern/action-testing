@@ -64,18 +64,18 @@ runs:
     shell: bash
     if: ${{ inputs.pytest_coverage_xml_file_name }} != ''
     run: |
-      echo "pytest_coverage_options=$(echo '$pytest_coverage_options --cov-report=xml:${{ inputs.pytest_coverage_xml_file_name }} --cov-report=term-missing:skip-covered')" >> $GITHUB_ENV
+      echo "pytest_report_name_options=$(echo '--cov-report=xml:${{ inputs.pytest_coverage_xml_file_name }} --cov-report=term-missing:skip-covered')" >> $GITHUB_ENV
 
   - name: Parse PyTest coverage fail percent option
     shell: bash
     if: ${{ inputs.coverage_fail_percent }} != 0
     run: |
-      echo "pytest_coverage_options=$(echo '$pytest_coverage_options --cov-fail-under=${{ inputs.coverage_fail_percent }}')" >> $GITHUB_ENV
+      echo "pytest_fail_percent_options=$(echo '--cov-fail-under=${{ inputs.coverage_fail_percent }}')" >> $GITHUB_ENV
 
   - name: Test with PyTest
     shell: bash
     run: |
-      ~/src/python_app/.venv/bin/python -m pytest --cov ${{ env.pytest_coverage_options }}
+      ~/src/python_app/.venv/bin/python -m pytest --cov ${{ env.pytest_report_name_options }} ${{ env.pytest_fail_percent_options }}
 
   - name: Type Check with Mypy
     shell: bash
