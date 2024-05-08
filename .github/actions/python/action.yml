@@ -29,9 +29,9 @@ runs:
     if: steps.cache-primes.outputs.cache-hit != 'true'
     shell: bash
     run: |
-      python3 -m venv .venv
-      .venv/bin/python -m pip install --upgrade pip
-      .venv/bin/pip install -r src/python_app/requirements.txt
+      python3 -m venv ~/src/python_app/.venv
+      ~/src/python_app/.venv/bin/python -m pip install --upgrade pip
+      ~/src/python_app/.venv/bin/pip install -r src/python_app/requirements.txt
 
     # Good explaination of different Python linting and formatting tools:
     # https://inventwithpython.com/blog/2022/11/19/python-linter-comparison-2022-pylint-vs-pyflakes-vs-flake8-vs-autopep8-vs-bandit-vs-prospector-vs-pylama-vs-pyroma-vs-black-vs-mypy-vs-radon-vs-mccabe/
@@ -48,22 +48,22 @@ runs:
     # to exclude directories, edit .flake8
     run: |
       # flake8 - stop the build if there are Python syntax errors or undefined names
-      .venv/bin/python -m flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+      ~/src/python_app/.venv/bin/python -m flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
       # flake8 - exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-      .venv/bin/python -m flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+      ~/src/python_app/.venv/bin/python -m flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
   - name: Test with PyTest
     shell: bash
     run: |
-      .venv/bin/python -m pytest --cov
+      ~/src/python_app/.venv/bin/python -m pytest --cov
 
   - name: Type Check with Mypy
     shell: bash
     run: |
-      .venv/bin/python -m mypy src/python_app
+      ~/src/python_app/.venv/bin/python -m mypy src/python_app
 
   - name: Security Lint with Bandit
     shell: bash
     run: |
       # bandit - log level low, critical issues only. Reports only if high confidence
-      .venv/bin/python -m bandit -ll -ii -r . -x ./.venv
+      ~/src/python_app/.venv/bin/python -m bandit -ll -ii -r . -x ./.venv
