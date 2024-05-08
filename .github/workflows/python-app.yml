@@ -9,7 +9,7 @@ on:
 env:
   # needed for converting pytest coverage to sonarcloud formatting, details here:
   # https://copdips.com/2023/01/sonarcloud-github-action.html#file-githubworkflowsciyml
-  pytest_coverage_xml_file_name: ~/src/python_app/coverage.xml
+  pytest_coverage_xml_file_name: coverage-reports/pytest-coverage.xml
 
 jobs:
   build:
