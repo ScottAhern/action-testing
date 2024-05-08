@@ -24,6 +24,7 @@ runs:
     # needed for converting pytest coverage to sonarcloud formatting, details here:
     # https://copdips.com/2023/01/sonarcloud-github-action.html#file-githubworkflowsciyml
     if: ${{ inputs.pytest_coverage_xml_file_name }} != ''
+    shell: bash
     run: |
       sed -i 's@'$GITHUB_WORKSPACE'@/github/workspace/@g' $GITHUB_WORKSPACE/${{ inputs.pytest_coverage_xml_file_name }}
 
@@ -34,7 +35,7 @@ runs:
     env: 
       SONAR_TOKEN: ${{ inputs.sonar_token }}
       GITHUB_TOKEN: ${{ inputs.github_token }}
-      
+
   - name: Clean up .scannerwork folder
     # Sonarcloud schedules cleanup at END of workflow, if another action does a checkout before this, it will break.
     # This is a workaround, details here: https://github.com/SonarSource/sonarqube-scan-action/issues/22#issuecomment-1906822668
