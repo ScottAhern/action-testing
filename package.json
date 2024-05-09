@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "npm": "^10.7.0"
+  },
+  "devDependencies": {
+    "husky": "^9.0.11"
+  },
+  "scripts": {
+    "prepare": "husky"
+  }
+}
