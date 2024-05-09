@@ -1,5 +1,7 @@
 {
   "dependencies": {
+    "black": "^0.3.0",
+    "lint-staged": "^15.2.2",
     "npm": "^10.7.0"
   },
   "devDependencies": {
