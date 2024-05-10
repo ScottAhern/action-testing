@@ -53,7 +53,6 @@
             ]
         }
     },
-    "workspaceFolder": "/workspace",
     // Use 'forwardPorts' to make a list of ports inside the container available locally.
     // "forwardPorts": [],
     // Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
@@ -63,6 +62,6 @@
         "install_hook_tools": "npm install -g husky @commitlint/cli @commitlint/config-conventional",
         "enable_husky": "npx husky install < /dev/null",
         "add_pre_commit_hook": "npx husky add .husky/commit-msg 'npx --no-install commitlint --edit $1'",
-        "update_python_modules": "pip --no-cache-dir install -r /workspace/src/python_app/requirements-dev.txt"
+        "update_python_modules": "pip --no-cache-dir install -r requirements-dev.txt"
     }
 }
