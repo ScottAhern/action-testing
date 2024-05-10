@@ -1,7 +1,0 @@
-#!/usr/bin/env sh
-script_dir=$(realpath $(dirname $0))
-. "$scipt_dir/h"
-
-python_src="$script_dir/../src/python_app"
-
-black $python_src/.venv/bin/python -m black 

@@ -6,3 +6,11 @@ ignore_missing_imports = true
 
 [tool.bandit]
 exclude_dirs = "src/python_app/.venv"
+
+[tool.isort]
+profile = "black"
+
+[flake8]
+max-line-length = 80
+extend-select = B950
+extend-ignore = E203,E501,E701
