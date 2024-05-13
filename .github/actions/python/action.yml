@@ -75,7 +75,7 @@ runs:
   - name: Test with PyTest
     shell: bash
     run: |
-      ~/src/python_app/.venv/bin/python -m pytest --cov ${{ env.pytest_report_name_options }} ${{ env.pytest_fail_percent_options }}
+      tox -e py
 
   - name: Type Check with Mypy
     shell: bash
