@@ -75,7 +75,7 @@ runs:
   - name: Test with PyTest
     shell: bash
     run: |
-      tox -e py
+       ~/src/python_app/.venv/bin/python -m tox -e py
 
   - name: Type Check with Mypy
     shell: bash
