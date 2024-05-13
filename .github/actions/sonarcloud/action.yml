@@ -20,15 +20,15 @@ runs:
   using: 'composite'
   steps:
 
-  - name: Override Coverage Source Path for Sonar
-    # needed for converting pytest coverage to sonarcloud formatting, details here:
-    # https://copdips.com/2023/01/sonarcloud-github-action.html#file-githubworkflowsciyml
-    if: ${{ inputs.pytest_coverage_xml_file_name }} != ''
-    shell: bash
-    run: |
-      cat  $GITHUB_WORKSPACE/${{ inputs.pytest_coverage_xml_file_name }}
-      sed -i 's@'$GITHUB_WORKSPACE'@/github/workspace/@g' $GITHUB_WORKSPACE/${{ inputs.pytest_coverage_xml_file_name }}
-      cat  $GITHUB_WORKSPACE/${{ inputs.pytest_coverage_xml_file_name }}
+  # - name: Override Coverage Source Path for Sonar
+  #   # needed for converting pytest coverage to sonarcloud formatting, details here:
+  #   # https://copdips.com/2023/01/sonarcloud-github-action.html#file-githubworkflowsciyml
+  #   if: ${{ inputs.pytest_coverage_xml_file_name }} != ''
+  #   shell: bash
+  #   run: |
+  #     cat  $GITHUB_WORKSPACE/${{ inputs.pytest_coverage_xml_file_name }}
+  #     sed -i 's@'$GITHUB_WORKSPACE'@/github/workspace/@g' $GITHUB_WORKSPACE/${{ inputs.pytest_coverage_xml_file_name }}
+  #     cat  $GITHUB_WORKSPACE/${{ inputs.pytest_coverage_xml_file_name }}
 
   - name: SonarCloud Scan
     uses: SonarSource/sonarcloud-github-action@master
