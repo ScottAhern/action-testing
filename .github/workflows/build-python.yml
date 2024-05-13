@@ -48,6 +48,7 @@ jobs:
           -D sonar.organization=scottahern
           -D sonar.projectKey=scottahern_action-testing
           -D sonar.exclusions=src/python_app/.venv/**
+          -D sonar.python.coverage.reportPaths=${{ env.pytest_coverage_xml_file_name }}
           -D sonar.sources=src/python_app
 
     - name: Run Custom Dockerhub action
