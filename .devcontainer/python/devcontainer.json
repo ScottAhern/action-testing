@@ -57,11 +57,24 @@
     // "forwardPorts": [],
     // Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
     "remoteUser": "vscode",
-    // Use 'postCreateCommand' to run commands after the container is created.
+    // Use 'postCreateCommand' to run commands after the container is created. Care, execution order is not sequential.
+    // Commitlint config workarounds: https://github.com/conventional-changelog/commitlint/issues/613
+    // 'husky init' will not work without package.json file (for non node projects), 'husky' instead still works and activate hooks.
     "postCreateCommand": {
-        "install_hook_tools": "npm install -g husky @commitlint/cli @commitlint/config-conventional",
-        "enable_husky": "npx husky install < /dev/null",
-        "add_pre_commit_hook": "npx husky add .husky/commit-msg 'npx --no-install commitlint --edit $1'",
-        "update_python_modules": "pip --no-cache-dir install -r requirements-dev.txt"
+        "install_commitlint": [
+            "/bin/bash",
+            "-c",
+            "npm install --yes -g @commitlint/cli @commitlint/config-conventional"
+        ],
+        "install husky": [
+            "/bin/bash",
+            "-c",
+            "npm install --yes -g husky && husky && echo 'commitlint --extends '@commitlint/config-conventional' --edit ${1}' > .husky/commit-msg"
+        ],
+        "update_python_modules": [
+            "/bin/bash",
+            "-c",
+            "pip --no-cache-dir install -r requirements-dev.txt"
+        ]
     }
 }

@@ -6,37 +6,11 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     # Remove imagemagick due to https://security-tracker.debian.org/tracker/CVE-2019-10131
     && apt-get purge -y imagemagick imagemagick-6-common 
 
-# ARG USERNAME=vscode
-# ARG USER_UID=1000
-# ARG USER_GID=$USER_UID
-
-# # Create the user
-# RUN groupadd --gid ${USER_GID} ${USERNAME} \
-#     && useradd --uid $USER_UID --gid ${USER_GID} -m ${USERNAME} \
-#     #
-#     # [Optional] Add sudo support. Omit if you don't need to install software after connecting.
-#     && apt-get update \
-#     && apt-get install -y sudo \
-#     && echo ${USERNAME} ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/${USERNAME} \
-#     && chmod 0440 /etc/sudoers.d/${USERNAME}
-
 # Temporary: Upgrade python packages due to https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-40897 and https://github.com/advisories/GHSA-2mqj-m65w-jghx
 # They are installed by the base image (python) which does not have the patch.
 RUN python3 -m pip install --upgrade \
     setuptools==69.0.3 \
     gitpython==3.1.41
-
-# [Optional] If your pip requirements rarely change, uncomment this section to add them to the image.
-# COPY requirements.txt /tmp/pip-tmp/
-# RUN pip3 --disable-pip-version-check --no-cache-dir install -r /tmp/pip-tmp/requirements.txt \
-#    && rm -rf /tmp/pip-tmp
-
-# [Optional] Uncomment this section to install additional OS packages.
-# RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
-#     && apt-get -y install --no-install-recommends <your-package-list-here>
-
-# [Optional] Set the default user. Omit if you want to keep the default as root.
-# USER ${USERNAME}
 
 # [Optional] Uncomment this line to install global node packages.
 # RUN . /usr/local/nvm/nvm.sh && npm install -g husky @commitlint/cli @commitlint/config-conventional
