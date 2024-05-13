@@ -11,6 +11,4 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
 RUN python3 -m pip install --upgrade \
     setuptools==69.0.3 \
     gitpython==3.1.41
-
-# [Optional] Uncomment this line to install global node packages.
-# RUN . /usr/local/nvm/nvm.sh && npm install -g husky @commitlint/cli @commitlint/config-conventional
+    
