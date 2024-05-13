@@ -86,4 +86,4 @@ runs:
     shell: bash
     run: |
       # bandit - log level low, critical issues only. Reports only if high confidence
-      ~/src/python_app/.venv/bin/python -m bandit -ll -ii -r . -x ./.venv ./.tox
+      ~/src/python_app/.venv/bin/python -m bandit -ll -ii -r . -x ./.venv -x ./.tox
