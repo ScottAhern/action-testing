@@ -9,6 +9,3 @@ exclude_dirs = "src/python_app/.venv"
 
 [tool.isort]
 profile = "black"
-
-[tool.coverage.run]
-relative_files = true
