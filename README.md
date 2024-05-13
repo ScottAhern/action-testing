@@ -2,5 +2,3 @@
 Testing of GitHub Actions 
 
 Using a workflow that utilises Sonarcloud
-
-test
