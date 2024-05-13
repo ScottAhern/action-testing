@@ -1,5 +1,6 @@
 # action-testing
 Testing of GitHub Actions 
 
-Using a workflow that utilises Sonarcloud TESTING
+Using a workflow that utilises Sonarcloud
 
+test
