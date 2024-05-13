@@ -52,7 +52,8 @@
                 "ms-python.isort",
                 "ms-python.mypy-type-checker",
                 "donjayamanne.python-extension-pack",
-                "ms-azuretools.vscode-docker"
+                "ms-azuretools.vscode-docker",
+                "ms-python.flake8"
             ]
         }
     },
