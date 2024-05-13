@@ -14,4 +14,3 @@ class Wallet(object):
 
     def add_cash(self, amount):
         self.balance += amount
-        test = "sdfhb12-asjfdn21-asdjas1-bdnsjdfvv9"
