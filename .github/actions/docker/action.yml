@@ -58,7 +58,7 @@ runs:
     with:
       image-ref: ${{ inputs.docker_image_name }}:${{ env.formatted_branch_name }}
       format: template
-      template: "@/github/workspace/${{ trivy_tpl_path }}"
+      template: "@/github/workspace/${{ inputs.trivy_tpl_path }}"
       output: trivy-high-critical.md
       ignore-unfixed: true
       vuln-type: 'os,library'
