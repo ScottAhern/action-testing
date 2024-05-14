@@ -53,7 +53,8 @@
                 "ms-python.mypy-type-checker",
                 "donjayamanne.python-extension-pack",
                 "ms-azuretools.vscode-docker",
-                "ms-python.flake8"
+                "ms-python.flake8",
+                "github.vscode-github-actions"
             ]
         }
     },

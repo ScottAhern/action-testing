@@ -75,7 +75,7 @@ runs:
   - name: Test with PyTest
     shell: bash
     run: |
-       ~/src/python_app/.venv/bin/python -m tox -e py
+       ~/src/python_app/.venv/bin/python -m pytest --cov ${{ env.pytest_report_name_options }} ${{ env.pytest_fail_percent_options }}
 
   - name: Type Check with Mypy
     shell: bash
@@ -86,4 +86,4 @@ runs:
     shell: bash
     run: |
       # bandit - log level low, critical issues only. Reports only if high confidence
-      ~/src/python_app/.venv/bin/python -m bandit -ll -ii -r . -x ./.venv -x ./.tox
+      ~/src/python_app/.venv/bin/python -m bandit -ll -ii -r . -x ./.venv
