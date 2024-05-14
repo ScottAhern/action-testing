@@ -55,3 +55,4 @@ jobs:
         build_context: ${{ vars.PYTHON_APP_SOURCE_DIR }}
         docker_image_name: ${{ vars.DOCKER_IMAGE_NAME }}
         github_token: ${{ secrets.GITHUB_TOKEN }}
+        trivy_tpl_path: ${{ vars.TRIVY_TPL_PATH }}
