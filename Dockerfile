@@ -4,4 +4,4 @@ WORKDIR /wallet
 
 COPY . .
 
-CMD python --version
+CMD python --versions
