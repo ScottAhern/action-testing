@@ -32,7 +32,7 @@ jobs:
         python_version: "3.10"
         pytest_coverage_xml_file_name: ${{ vars.PYTEST_COVERAGE_XML_FILE_NAME }}
         pytest_coverage_fail_percent: 50
-        source_dir: ${{ vars.PYTHON_SOURCE_DIR }}
+        source_dir: ${{ vars.PYTHON_APP_SOURCE_DIR }}
 
     - name: Run Custom SonarCloud action
       uses: ./.github/actions/sonarcloud/
@@ -43,15 +43,15 @@ jobs:
         sonar_args: >
           -D sonar.organization=scottahern
           -D sonar.projectKey=scottahern_action-testing
-          -D sonar.exclusions=${{ vars.PYTHON_SOURCE_DIR }}/.venv/**
+          -D sonar.exclusions=${{ vars.PYTHON_APP_SOURCE_DIR }}/.venv/**
           -D sonar.python.coverage.reportPaths=${{ vars.PYTEST_COVERAGE_XML_FILE_NAME }}
-          -D sonar.sources=${{ vars.PYTHON_SOURCE_DIR }}
+          -D sonar.sources=${{ vars.PYTHON_APP_SOURCE_DIR }}
 
     - name: Run Custom Docker action
       uses: ./.github/actions/docker/
       with: 
         dockerhub_username: ${{ secrets.DOCKERHUB_USERNAME }}
         dockerhub_token: ${{ secrets.DOCKERHUB_TOKEN }}
-        build_context: "${{ vars.PYTHON_SOURCE_DIR }}"
-        docker_image_name: "test-python-project"
+        build_context: ${{ vars.PYTHON_APP_SOURCE_DIR }}
+        docker_image_name: ${{ vars.DOCKER_IMAGE_NAME }}
         github_token: ${{ secrets.GITHUB_TOKEN }}
