@@ -21,10 +21,6 @@ inputs:
   docker_image_name:
     description: 'Docker image name'
     required: true
-
-  trivy_tpl_path:
-    description: 'Path to trivy report template'
-    required: true
   
   
 runs:
@@ -58,7 +54,7 @@ runs:
     with:
       image-ref: ${{ inputs.docker_image_name }}:${{ env.formatted_branch_name }}
       format: template
-      template: "@/github/workspace/${{ inputs.trivy_tpl_path }}"
+      template: "@/github/workspace/.github/actions/docker/trivy.tpl"
       output: trivy-high-critical.md
       ignore-unfixed: true
       vuln-type: 'os,library'
