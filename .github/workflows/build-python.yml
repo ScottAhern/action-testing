@@ -38,6 +38,7 @@ jobs:
         python_version: "3.10"
         pytest_coverage_xml_file_name: ${{ env.pytest_coverage_xml_file_name }}
         pytest_coverage_fail_percent: 50
+        source_dir: ${{ env.source_dir }}
 
     - name: Run Custom SonarCloud action
       uses: ./.github/actions/sonarcloud/
