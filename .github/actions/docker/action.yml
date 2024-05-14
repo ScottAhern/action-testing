@@ -92,7 +92,13 @@ runs:
   - name: Check for package.json
     shell: bash
     run: |
-      touch package.json
+      if [ ! -f "package.json" ]; then
+      echo '{
+        "name": "test-app",
+        "version": "0.0.0",
+        "private": true
+      }' > package.json
+      fi
 
   - name: Semantic Release
     if: ${{ steps.branch-names.outputs.current_branch == 'main' && github.event_name == 'push' }} 
