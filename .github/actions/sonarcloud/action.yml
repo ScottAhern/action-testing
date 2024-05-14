@@ -26,7 +26,9 @@ runs:
     if: ${{ inputs.pytest_coverage_xml_file_name }} != ''
     shell: bash
     run: |
+      cat  $GITHUB_WORKSPACE/${{ inputs.pytest_coverage_xml_file_name }}
       sed -i 's@'$GITHUB_WORKSPACE'@/github/workspace/@g' $GITHUB_WORKSPACE/${{ inputs.pytest_coverage_xml_file_name }}
+      cat  $GITHUB_WORKSPACE/${{ inputs.pytest_coverage_xml_file_name }}
 
   - name: SonarCloud Scan
     uses: SonarSource/sonarcloud-github-action@master
