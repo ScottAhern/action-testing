@@ -89,12 +89,18 @@ runs:
       username: ${{ github.repository_owner }}
       password: ${{ inputs.github_token }}
 
+  - name: Check for package.json
+    shell: bash
+    run: |
+      touch package.json
+
   - name: Semantic Release
     if: ${{ steps.branch-names.outputs.current_branch == 'main' && github.event_name == 'push' }} 
     uses: cycjimmy/semantic-release-action@v4
     id: semantic
     with:
       branch: main
+      ci: true
     env:
       GITHUB_TOKEN: ${{ inputs.github_token }}
 
