@@ -20,32 +20,58 @@ inputs:
 runs:
   using: 'composite'
   steps:
+    # caching pipx: https://github.com/pypa/pipx/discussions/1051
+  - name: Setup Local Variables
+    id: variable-setup
+    run: |
+      echo "pipx-home=$PIPX_HOME" >> $GITHUB_OUTPUT
+      echo "pipx-bin-dir=$PIPX_BIN_DIR" >> $GITHUB_OUTPUT
+
+      export BASE64_PIPX_ID=$(echo -n 'poetry==${{ inputs.poetry-version }} ${{ inputs.pipx-packages }}' | base64)
+      echo "cache-key-pipx=pipx-${{ inputs.os }}-${{ inputs.python-version }}-$BASE64_PIPX_ID" >> $GITHUB_OUTPUT
+      echo 'pipx-packages="black flake8 mypy bandit pytest"' >> $GITHUB_OUTPUT
+    shell: bash
+
+  - name: Cache pipx
+    id: cache-pipx
+    uses: actions/cache@v3
+    with:
+      # https://pypa.github.io/pipx/how-pipx-works
+      path: |
+        ${{ steps.variable-setup.outputs.pipx-home }}
+        ${{ steps.variable-setup.outputs.pipx-bin-dir }}
+      key: ${{ steps.variable-setup.outputs.cache-key-pipx }}
+
+  - name: Install Poetry ${{ inputs.poetry-version }} and '${{ steps.variable-setup.outputs.pipx-packages }}'
+    if: ${{ steps.cache-pipx.outputs.cache-hit != 'true' }}
+    run: |
+      for tool in "poetry==${{ inputs.poetry-version }}" ${{ steps.variable-setup.outputs.pipx-packages }}; do
+        pipx install $tool
+      done
+      # Resolves https://github.com/python-poetry/poetry/issues/7611
+      poetry self add setuptools==68.1.2
+    shell: bash
+
+  - name: Debug pipx
+    run: |
+      pipx ensurepath
+      pipx list
+    shell: bash
+
   - name: Set up Python
     uses: actions/setup-python@v4
     id: setup_python
     with:
       python-version: ${{ inputs.python_version }}
+      cache: poetry
 
-  - name: Cache venv
-    uses: actions/cache@v3
-    id: cache-venv
-    # Cache naming convention from:
-    # https://adamj.eu/tech/2023/11/02/github-actions-faster-python-virtual-environments/
-    # strict versioning inside requirements.txt required 
-    with:
-      key: venv-${{ runner.os }}-${{ steps.setup_python.outputs.python-version}}-${{ hashFiles('**/*requirements-dev.txt') }}
-      path: ~/${{ inputs.source_dir }}/.venv
-
-  - name: Install dependencies
-    if: steps.cache-primes.outputs.cache-hit != 'true'
-    shell: bash
+  - name: Install Project and Minimum Subset of Dependencies
     run: |
-      python3 -m venv ~/${{ inputs.source_dir }}/.venv
-      ~/${{ inputs.source_dir }}/.venv/bin/python -m pip install --upgrade pip
-      ~/${{ inputs.source_dir }}/.venv/bin/pip install -r requirements-dev.txt
+      poetry install
+    shell: bash
 
-    # Good explaination of different Python linting and formatting tools:
-    # https://inventwithpython.com/blog/2022/11/19/python-linter-comparison-2022-pylint-vs-pyflakes-vs-flake8-vs-autopep8-vs-bandit-vs-prospector-vs-pylama-vs-pyroma-vs-black-vs-mypy-vs-radon-vs-mccabe/
+  # Good explaination of different Python linting and formatting tools:
+  # https://inventwithpython.com/blog/2022/11/19/python-linter-comparison-2022-pylint-vs-pyflakes-vs-flake8-vs-autopep8-vs-bandit-vs-prospector-vs-pylama-vs-pyroma-vs-black-vs-mypy-vs-radon-vs-mccabe/
 
   - name: Check Format with Black
     uses: psf/black@stable
@@ -59,9 +85,9 @@ runs:
     # to exclude directories, edit .flake8
     run: |
       # flake8 - stop the build if there are Python syntax errors or undefined names
-      ~/${{ inputs.source_dir }}/.venv/bin/python -m flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+      flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
       # flake8 - exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-      ~/${{ inputs.source_dir }}/.venv/bin/python -m flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+      flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
   - name: Parse PyTest coverage xml file name option
     shell: bash
@@ -78,15 +104,15 @@ runs:
   - name: Test with PyTest
     shell: bash
     run: |
-       ~/${{ inputs.source_dir }}/.venv/bin/python -m pytest --cov ${{ env.pytest_report_name_options }} ${{ env.pytest_fail_percent_options }}
+       pytest --cov ${{ env.pytest_report_name_options }} ${{ env.pytest_fail_percent_options }}
 
   - name: Type Check with Mypy
     shell: bash
     run: |
-      ~/${{ inputs.source_dir }}/.venv/bin/python -m mypy ${{ inputs.source_dir }}
+      mypy ${{ inputs.source_dir }}
 
   - name: Security Lint with Bandit
     shell: bash
     run: |
       # bandit - log level low, critical issues only. Reports only if high confidence
-      ~/${{ inputs.source_dir }}/.venv/bin/python -m bandit -ll -ii -r . -x ./.venv
+      bandit -ll -ii -r . -x ./.venv
