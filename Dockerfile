@@ -24,11 +24,11 @@ FROM cgr.dev/chainguard/python:latest as runtime
 
 ENV VIRTUAL_ENV=/app/.venv \
     PATH="/app/.venv/bin:$PATH"
-    
+
 COPY --from=builder ${VIRTUAL_ENV} ${VIRTUAL_ENV}
 
 # REPLACE: project names here
-COPY src/banking ./banking
+COPY example_project example_project
 
 # REPLACE: run command here
 ENTRYPOINT ["python", "-m", "wallet.main"]
