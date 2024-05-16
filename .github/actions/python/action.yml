@@ -2,20 +2,21 @@ name: PyTest CI
 description: 'Tests a Python application using PyTest and flake8'
 
 inputs:
-  python_version:
-    description: 'Required Python version'
-    required: true
-  pytest_coverage_xml_file_name:
-    description: 'PyTest coverage report path'
-    required: false
-    default: ''
-  pytest_coverage_fail_percent:
-    description: 'Fails if coverage is under this percent'
-    required: false
-    default: 0
   source_dir:
     description: 'Source directory for the python application'
     required: true
+  python_version:
+    description: 'Required Python version'
+    required: false
+    default: "3.12"
+  pytest_coverage_xml_file_name:
+    description: 'PyTest coverage report path'
+    required: false
+    default: 'coverage-reports/coverage-pytest.xml'
+  pytest_coverage_fail_percent:
+    description: 'Fails if coverage is under this percent'
+    required: false
+    default: 50
   poetry_version:
     description: 'Required Poetry version'
     required: false

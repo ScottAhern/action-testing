@@ -4,10 +4,8 @@ on: [push, pull_request]
 
 env:
   DOCKER_IMAGE_NAME: "example_project"
-  PYTEST_COVERAGE_FAIL_PERCENT: 50
   PYTEST_COVERAGE_XML_FILE_NAME: "coverage-reports/coverage-pytest.xml"
   PYTHON_APP_SOURCE_DIR: "example_project"
-  PYTHON_VERSION: "3.12"
   SONAR_ORGANIZATION: "scottahern"
   SONAR_PROJECT_KEY: "scottahern_action-testing"
 
@@ -45,9 +43,7 @@ jobs:
     - name: Run Custom Python CI action
       uses: ./.github/actions/python/
       with: 
-        python_version: ${{ env.PYTHON_VERSION }}
         pytest_coverage_xml_file_name: ${{ env.PYTEST_COVERAGE_XML_FILE_NAME }}
-        pytest_coverage_fail_percent: ${{ env.PYTEST_COVERAGE_FAIL_PERCENT }}
         source_dir: ${{ env.PYTHON_APP_SOURCE_DIR }}
 
     - name: Run Custom SonarCloud action
