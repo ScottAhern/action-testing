@@ -71,20 +71,25 @@
             "-c",
             "npm install --yes -g @commitlint/cli @commitlint/config-conventional"
         ],
-        "install husky": [
+        "install_husky": [
             "/bin/bash",
             "-c",
             "npm install --yes -g husky && husky && echo 'commitlint --extends '@commitlint/config-conventional' --edit ${1}' > .husky/commit-msg && echo 'docker run -v $PWD:/path ghcr.io/gitleaks/gitleaks:latest protect -v --staged --source=/path' > .husky/pre-commit"
-        ],
-        "update_python_modules": [
-            "/bin/bash",
-            "-c",
-            "pip --no-cache-dir install -r requirements-dev.txt"
         ],
         "pull_gitleak_docker": [
             "/bin/bash",
             "-c",
             "docker pull ghcr.io/gitleaks/gitleaks:latest"
+        ],
+        "install_poetry": [
+            "/bin/bash",
+            "-c",
+            "pipx install poetry && poetry install"
+        ],
+        "install_python_dev_tools": [
+            "/bin/bash",
+            "-c",
+            "pipx install black flake8 mypy bandit"
         ]
     }
 }

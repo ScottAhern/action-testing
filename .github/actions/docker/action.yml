@@ -91,7 +91,7 @@ runs:
 
   - name: Check for package.json
     # Semantic Release Action will not run unless there is an existing package.json file
-    # to skip npm publishes (eg. for non node projects), then make sure '"private": true' is set
+    # to skip npm publishing, then make sure ("private": true) is set
     shell: bash
     run: |
       if [ ! -f "package.json" ]; then
