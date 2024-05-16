@@ -23,7 +23,7 @@ inputs:
   pipx_packages:
     description: 'Packages to install independantly using pipx'
     required: false
-    default: 'black flake8 mypy bandit pytest flake8-bugbear'
+    default: 'black flake8 mypy bandit pytest'
   
 runs:
   using: 'composite'
