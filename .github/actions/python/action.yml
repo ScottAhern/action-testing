@@ -23,7 +23,7 @@ inputs:
   pipx_packages:
     description: 'Packages to install independantly using pipx'
     required: false
-    default: 'black flake8 mypy bandit pytest'
+    default: 'black flake8 mypy bandit pytest flake8-bugbear'
   
 runs:
   using: 'composite'
@@ -72,9 +72,22 @@ runs:
       python-version: ${{ inputs.python_version }}
       cache: poetry
 
-  - name: Install Project and Minimum Subset of Dependencies
+  - name: Poetry config
     run: |
-      poetry install
+      poetry config virtualenvs.in-project true --local
+    shell: bash
+
+  - name: Cache Poetry .venv
+    uses: actions/cache@v3
+    id: cached_poetry_dependencies
+    with:
+      path: .venv
+      key: venv-${{ runner.os }}-${{ inputs.python-version }}-${{ inputs.poetry_version }}-${{ hashFiles('**/poetry.lock') }}
+
+  - name: Install Poetry dependencies
+    if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
+    run: |
+      poetry --no-interaction install
     shell: bash
 
   # Good explaination of different Python linting and formatting tools:
