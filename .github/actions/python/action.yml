@@ -52,7 +52,7 @@ runs:
   - name: Install Poetry ${{ inputs.poetry_version }} and '${{ steps.variable_setup.outputs.pipx_packages }}'
     if: ${{ steps.cache_pipx.outputs.cache-hit != 'true' }}
     run: |
-      export PIPX_TOOLS=:"black flake8 mypy bandit"
+      export PIPX_TOOLS="black flake8 mypy bandit"
       for tool in "poetry==${{ inputs.poetry_version }}" $PIPX_TOOLS ${{ inputs.pipx_packages }}; do
         pipx install $tool
       done
