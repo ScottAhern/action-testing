@@ -23,7 +23,7 @@ inputs:
   pipx_packages:
     description: 'Packages to install independantly using pipx'
     required: false
-    default: 'black flake8 mypy bandit pytest pytest-cov'
+    default: 'black flake8 mypy bandit pytest'
   
 runs:
   using: 'composite'
@@ -56,6 +56,8 @@ runs:
       done
       # Resolves https://github.com/python-poetry/poetry/issues/7611
       poetry self add setuptools==68.1.2
+      pipx inject flake8 flake8-bugbear
+      pipx inject pytest pytest-cov
     shell: bash
 
   - name: Debug pipx
