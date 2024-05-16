@@ -34,8 +34,8 @@ runs:
     run: |
       echo "pipx_home=$PIPX_HOME" >> $GITHUB_OUTPUT
       echo "pipx_bin_dir=$PIPX_BIN_DIR" >> $GITHUB_OUTPUT
-
       export BASE64_PIPX_ID=$(echo -n 'poetry==${{ inputs.poetry_version }} ${{ inputs.pipx_packages }}' | base64)
+      echo -n "cache_key_pipx=pipx-${{ runner.os }}-${{ inputs.python_version }}-$BASE64_PIPX_ID"
       echo "cache_key_pipx=pipx-${{ runner.os }}-${{ inputs.python_version }}-$BASE64_PIPX_ID" >> $GITHUB_OUTPUT
     shell: bash
 
