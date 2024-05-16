@@ -1,9 +1,12 @@
 # Good explaination of multi stage builds with poetry:
 # https://medium.com/@albertazzir/blazing-fast-python-docker-builds-with-poetry-a78a66f5aed0
 
-FROM python:3.12-buster as builder
+ARG VARIANT=3.12-bookworm
+ARG POETRY_VERSION=1.8.3
 
-RUN pip install poetry==1.8.3
+FROM python:${VARIANT} as builder
+
+RUN pip install poetry==${POETRY_VERSION}
 
 ENV POETRY_NO_INTERACTION=1 \
     POETRY_VIRTUALENVS_IN_PROJECT=1 \
@@ -28,4 +31,4 @@ COPY --from=builder ${VIRTUAL_ENV} ${VIRTUAL_ENV}
 COPY src/banking ./banking
 
 # REPLACE: run command here
-CMD python --versions
+ENTRYPOINT ["python", "-m", "wallet.main"]
