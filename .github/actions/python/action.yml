@@ -36,7 +36,7 @@ runs:
       echo "pipx_bin_dir=$PIPX_BIN_DIR" >> $GITHUB_OUTPUT
 
       export BASE64_PIPX_ID=$(echo -n 'poetry==${{ inputs.poetry_version }} ${{ inputs.pipx_packages }}' | base64)
-      echo "cache_key_pipx=pipx-${{ runner.os }}-${{ inputs.python-version }}-$BASE64_PIPX_ID" >> $GITHUB_OUTPUT
+      echo "cache_key_pipx=pipx-${{ runner.os }}-${{ inputs.python_version }}-$BASE64_PIPX_ID" >> $GITHUB_OUTPUT
     shell: bash
 
   - name: Cache pipx
@@ -82,7 +82,7 @@ runs:
     id: cached_poetry_dependencies
     with:
       path: .venv
-      key: venv-${{ runner.os }}-${{ inputs.python-version }}-${{ inputs.poetry_version }}-${{ hashFiles('**/poetry.lock') }}
+      key: venv-${{ runner.os }}-${{ inputs.python_version }}-${{ inputs.poetry_version }}-${{ hashFiles('**/poetry.lock') }}
 
   - name: Install Poetry dependencies
     if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
