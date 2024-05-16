@@ -2,10 +2,9 @@
 # https://medium.com/@albertazzir/blazing-fast-python-docker-builds-with-poetry-a78a66f5aed0
 
 ARG VARIANT=3.12-bookworm
+FROM python:${VARIANT} AS builder
+
 ARG POETRY_VERSION=1.8.3
-
-FROM python:${VARIANT} as builder
-
 RUN pip install poetry==${POETRY_VERSION}
 
 ENV POETRY_NO_INTERACTION=1 \
@@ -20,7 +19,7 @@ COPY pyproject.toml poetry.lock README.md ./
 
 RUN --mount=type=cache,target=$POETRY_CACHE_DIR poetry install --without dev --no-root
 
-FROM cgr.dev/chainguard/python:latest as runtime
+FROM cgr.dev/chainguard/python:latest AS runtime
 
 ENV VIRTUAL_ENV=/app/.venv \
     PATH="/app/.venv/bin:$PATH"
