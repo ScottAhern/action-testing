@@ -11,6 +11,13 @@ env:
   SONAR_ORGANIZATION: "scottahern"
   SONAR_PROJECT_KEY: "scottahern_action-testing"
 
+# Please set the following 'Secrets' in the Github repo, using:
+# Settings -> Secrets and variables -> Actions -> New repository secret
+#   DOCKERHUB_TOKEN
+#   DOCKERHUB_USERNAME
+#   GITLEAKS_TOKEN
+#   SONAR_TOKEN
+
 jobs:
   build:
     runs-on: ubuntu-latest
