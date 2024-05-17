@@ -34,20 +34,22 @@ runs:
     id: variable_setup
     run: |
       echo "pipx_home=$PIPX_HOME" >> $GITHUB_OUTPUT
+      echo "pipx_home=$PIPX_HOME"
       echo "pipx_bin_dir=$PIPX_BIN_DIR" >> $GITHUB_OUTPUT
+      echo "pipx_bin_dir=$PIPX_BIN_DIR"
       export BASE64_PIPX_ID=$(echo -n 'poetry==${{ inputs.poetry_version }} ${{ inputs.pipx_packages }}' | base64 -w 0)
       echo "cache_key_pipx=pipx-${{ runner.os }}-${{ inputs.python_version }}-$BASE64_PIPX_ID" >> $GITHUB_OUTPUT
     shell: bash
 
-  - name: Cache pipx
-    id: cache_pipx
-    uses: actions/cache@v3
-    with:
-      # https://pypa.github.io/pipx/how-pipx-works
-      path: |
-        ${{ steps.variable_setup.outputs.pipx_home }}
-        ${{ steps.variable_setup.outputs.pipx_bin_dir }}
-      key: ${{ steps.variable_setup.outputs.cache_key_pipx }}
+  # - name: Cache pipx
+  #   id: cache_pipx
+  #   uses: actions/cache@v3
+  #   with:
+  #     # https://pypa.github.io/pipx/how-pipx-works
+  #     path: |
+  #       ${{ steps.variable_setup.outputs.pipx_home }}
+  #       ${{ steps.variable_setup.outputs.pipx_bin_dir }}
+  #     key: ${{ steps.variable_setup.outputs.cache_key_pipx }}
 
   - name: Install Poetry ${{ inputs.poetry_version }} and '${{ steps.variable_setup.outputs.pipx_packages }}'
     if: ${{ steps.cache_pipx.outputs.cache-hit != 'true' }}
@@ -79,12 +81,12 @@ runs:
       poetry config virtualenvs.in-project true --local
     shell: bash
 
-  # - name: Cache Poetry .venv
-  #   uses: actions/cache@v3
-  #   id: cached_poetry_dependencies
-  #   with:
-  #     path: .venv
-  #     key: venv-${{ runner.os }}-${{ inputs.python_version }}-${{ inputs.poetry_version }}-${{ hashFiles('**/poetry.lock') }}
+  - name: Cache Poetry .venv
+    uses: actions/cache@v3
+    id: cached_poetry_dependencies
+    with:
+      path: .venv
+      key: venv-${{ runner.os }}-${{ inputs.python_version }}-${{ inputs.poetry_version }}-${{ hashFiles('**/poetry.lock') }}
 
   - name: Install Poetry dependencies
     if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
