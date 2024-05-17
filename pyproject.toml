@@ -1,5 +1,9 @@
 [tool.mypy]
 ignore_missing_imports = true
+exclude = [
+    ".venv",
+    "docs"
+]
 
 [tool.isort]
 profile = "black"
