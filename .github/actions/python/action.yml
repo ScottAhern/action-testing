@@ -39,15 +39,17 @@ runs:
       echo "cache_key_pipx=pipx-${{ runner.os }}-${{ inputs.python_version }}-$BASE64_PIPX_ID" >> $GITHUB_OUTPUT
     shell: bash
 
-  - name: Cache pipx
-    id: cache_pipx
-    uses: actions/cache@v3
-    with:
-      # https://pypa.github.io/pipx/how-pipx-works
-      path: |
-        ${{ steps.variable_setup.outputs.pipx_home }}
-        ${{ steps.variable_setup.outputs.pipx_bin_dir }}
-      key: ${{ steps.variable_setup.outputs.cache_key_pipx }}
+  # TODO: fix permissions issues with cache. Possible solution may be to only cache specific
+  #       installed directories. EG only cache the pipx venvs for black flake8 etc.
+  # - name: Cache pipx
+  #   id: cache_pipx
+  #   uses: actions/cache@v3
+  #   with:
+  #     # https://pypa.github.io/pipx/how-pipx-works
+  #     path: |
+  #       ${{ steps.variable_setup.outputs.pipx_home }}
+  #       ${{ steps.variable_setup.outputs.pipx_bin_dir }}
+  #     key: ${{ steps.variable_setup.outputs.cache_key_pipx }}
 
   - name: Install Poetry ${{ inputs.poetry_version }} and '${{ steps.variable_setup.outputs.pipx_packages }}'
     if: ${{ steps.cache_pipx.outputs.cache-hit != 'true' }}
@@ -138,3 +140,23 @@ runs:
     run: |
       # bandit - log level low, critical issues only. Reports only if high confidence
       bandit -ll -ii -r . -x ./.venv
+
+  - name: Build project into package
+    shell: bash
+    run: |
+      poetry build
+
+  - name: Get branch names.
+    id: branch-names
+    uses: tj-actions/branch-names@v8
+
+  - name: Build docs with Sphinx
+    shell: bash
+    run: |
+      cd docs && poetry run make html
+
+  - name: Commit and push doc changes
+    if: ${{ steps.branch-names.outputs.current_branch == 'main' && github.event_name == 'push' }}
+    uses: stefanzweifel/git-auto-commit-action@v5
+    with:
+      file_pattern: docs/*
