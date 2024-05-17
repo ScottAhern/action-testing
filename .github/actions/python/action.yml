@@ -138,3 +138,28 @@ runs:
     run: |
       # bandit - log level low, critical issues only. Reports only if high confidence
       bandit -ll -ii -r . -x ./.venv
+
+  - name: Build project into package
+    shell: bash
+    run: |
+      poetry build
+
+  - name: Install built package with poetry
+    shell: bash
+    run: |
+      poetry add dist/*.whl
+
+  - name: Get branch names.
+    id: branch-names
+    uses: tj-actions/branch-names@v8
+
+  - name: Build docs with Sphinx
+    shell: bash
+    run: |
+      cd docs && make html
+
+  - name: Commit and push doc changes
+    if: ${{ steps.branch-names.outputs.current_branch == 'main' && github.event_name == 'push' }}
+    uses: stefanzweifel/git-auto-commit-action@v5
+      with:
+        file_pattern: docs/*
