@@ -156,7 +156,7 @@ runs:
   - name: Build docs with Sphinx
     shell: bash
     run: |
-      cd docs && make html
+      cd docs && poetry run make html
 
   - name: Commit and push doc changes
     if: ${{ steps.branch-names.outputs.current_branch == 'main' && github.event_name == 'push' }}
