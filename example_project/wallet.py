@@ -12,7 +12,8 @@ class Wallet(object):
     """A simple wallet class to manage cash balance.
 
     Args:
-        initial_amount (int, optional): Initial amount of cash in the wallet. Defaults to 0.
+        initial_amount (int, optional): Initial amount of cash in the wallet.
+            Defaults to 0.
 
     Attributes:
         balance (int): The current balance of the wallet.
@@ -22,7 +23,8 @@ class Wallet(object):
         """Initializes the wallet with an initial amount.
 
         Args:
-            initial_amount (int, optional): Initial amount of cash in the wallet. Defaults to 0.
+            initial_amount (int, optional): Initial amount of cash in the wallet.
+                Defaults to 0.
         """
         self.balance = initial_amount
 
@@ -33,7 +35,8 @@ class Wallet(object):
             amount (int): The amount of cash to spend.
 
         Raises:
-            InsufficientAmount: If the amount to spend is greater than the current balance.
+            InsufficientAmount: If the amount to spend is greater than
+                the current balance.
         """
         if self.balance < amount:
             raise InsufficientAmount("Not enough available to spend {}".format(amount))
