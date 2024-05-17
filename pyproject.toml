@@ -18,6 +18,7 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.12"
+sphinx = "^7.3.7"
 
 
 [tool.poetry.group.dev.dependencies]
