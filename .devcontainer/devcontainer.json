@@ -48,6 +48,10 @@
                 "mypy-type-checker.ignorePatterns": [
                     "docs/**/*.py",
                     ".venv/**/*.py"
+                ],
+                "flake8.ignorePatterns": [
+                    "docs/**/*.py",
+                    ".venv/**/.py"
                 ]
             },
             "extensions": [
